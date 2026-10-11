@@ -3,7 +3,9 @@ import { Badge, Spinner } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { getParticipant } from '../api/participants'
 import Breadcrumbs from '../components/Breadcrumbs'
+import MockBanner from '../components/MockBanner'
 import ParticipantImage from '../components/ParticipantImage'
+import SimilarParticipants from '../components/SimilarParticipants'
 import type { Participant } from '../types'
 
 const formatDate = (iso: string) => iso.split('-').reverse().join('.')
@@ -13,11 +15,15 @@ export default function ParticipantPage() {
   const { id } = useParams()
   const [participant, setParticipant] = useState<Participant | null>(null)
   const [loading, setLoading] = useState(true)
+  const [isMock, setIsMock] = useState(false)
 
   useEffect(() => {
     setLoading(true)
     getParticipant(Number(id))
-      .then((p) => setParticipant(p ?? null))
+      .then(({ data, isMock }) => {
+        setParticipant(data ?? null)
+        setIsMock(isMock)
+      })
       .finally(() => setLoading(false))
   }, [id])
 
@@ -40,6 +46,7 @@ export default function ParticipantPage() {
   return (
     <>
       <Breadcrumbs items={[{ label: 'Участники', to: '/participants' }, { label: participant.full_name }]} />
+      <MockBanner show={isMock} />
       <article className="vibe">
         {participant.video_url ? (
           <video className="vibe__video" src={participant.video_url} poster={participant.image_url ?? undefined} autoPlay muted loop playsInline />
@@ -60,6 +67,7 @@ export default function ParticipantPage() {
           <p className="vibe__description">{participant.description}</p>
         </div>
       </article>
+      <SimilarParticipants participant={participant} />
     </>
   )
 }

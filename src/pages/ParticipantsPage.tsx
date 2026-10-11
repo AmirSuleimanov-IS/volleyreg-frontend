@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Col, Row, Spinner } from 'react-bootstrap'
 import { getParticipants } from '../api/participants'
 import Breadcrumbs from '../components/Breadcrumbs'
+import MockBanner from '../components/MockBanner'
 import ParticipantCard from '../components/ParticipantCard'
 import ParticipantsFilterForm from '../components/ParticipantsFilterForm'
 import type { Participant, ParticipantsFilter } from '../types'
@@ -11,11 +12,15 @@ export default function ParticipantsPage() {
   const [filter, setFilter] = useState<ParticipantsFilter>({ participantName: '', position: '' })
   const [participants, setParticipants] = useState<Participant[]>([])
   const [loading, setLoading] = useState(true)
+  const [isMock, setIsMock] = useState(false)
 
   useEffect(() => {
     setLoading(true)
     getParticipants(filter)
-      .then(setParticipants)
+      .then(({ data, isMock }) => {
+        setParticipants(data)
+        setIsMock(isMock)
+      })
       .finally(() => setLoading(false))
   }, [filter])
 
@@ -23,6 +28,7 @@ export default function ParticipantsPage() {
     <>
       <Breadcrumbs items={[{ label: 'Участники' }]} />
       <h1 className="page-title">Участницы Первенства ЗГУ по волейболу 2026</h1>
+      <MockBanner show={isMock} />
       <ParticipantsFilterForm value={filter} onSearch={setFilter} />
 
       {loading ? (

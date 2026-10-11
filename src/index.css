@@ -264,3 +264,20 @@ a {
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
+
+/* похожие участницы */
+.similar {
+  max-width: 1100px;
+  margin: 32px auto 0;
+}
+
+.similar__title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #001226;
+  margin-bottom: 16px;
+}
+
+.similar__status {
+  color: var(--text-grey);
+}
