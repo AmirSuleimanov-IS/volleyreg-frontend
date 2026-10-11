@@ -1,0 +1,40 @@
+import type { Participant } from '../types'
+
+// mock-коллекция участников: используется, когда бэкенд недоступен
+const media = (file: string) => `${import.meta.env.BASE_URL}mock/${file}`
+
+export const PARTICIPANTS_MOCK: Participant[] = [
+  { id: 1, full_name: 'Ковалёва Анна Сергеевна', birth_date: '2004-03-14', position: 'Связующая', height_cm: 176, sport_rank: 'КМС', city: 'Норильск',
+    description: 'Связующая с точной передачей в первый темп. Хорошо читает блок соперника и быстро разводит нападающих по зонам. Капитан студенческой сборной ЗГУ в сезоне 2025/26.',
+    image_url: media('participant_1.jpg'), video_url: media('video_1.mp4') },
+  { id: 2, full_name: 'Миронова Екатерина Олеговна', birth_date: '2003-07-02', position: 'Доигровщица', height_cm: 181, sport_rank: '1 разряд', city: 'Норильск',
+    description: 'Доигровщица универсального плана: уверенный приём подачи и сильный удар из четвёртой зоны. Стабильно подаёт планирующую подачу в зону либеро соперника.',
+    image_url: media('participant_2.jpg'), video_url: media('video_2.mp4') },
+  { id: 3, full_name: 'Белова Дарья Андреевна', birth_date: '2005-01-23', position: 'Центральная блокирующая', height_cm: 188, sport_rank: 'КМС', city: 'Красноярск',
+    description: 'Центральная блокирующая с высоким прыжком. Ставит групповой блок и атакует быстрым ударом с передачи в первый темп. Лучшая блокирующая краевого первенства 2025 года.',
+    image_url: media('participant_3.jpg'), video_url: media('video_3.mp4') },
+  { id: 4, full_name: 'Сафина Алина Ринатовна', birth_date: '2004-11-09', position: 'Либеро', height_cm: 165, sport_rank: '1 разряд', city: 'Норильск',
+    description: 'Либеро, отвечает за приём подачи и игру в защите. Отличная реакция на сложных мячах, подстраховка блока и точная доводка мяча на связующую.',
+    image_url: media('participant_4.jpg'), video_url: media('video_1.mp4') },
+  { id: 5, full_name: 'Громова Полина Игоревна', birth_date: '2002-05-30', position: 'Диагональная', height_cm: 184, sport_rank: 'МС', city: 'Москва',
+    description: 'Диагональная нападающая, основная атакующая сила команды. Мощный удар из второй зоны и с задней линии, силовая подача в прыжке. Мастер спорта, выступала в высшей лиге «Б».',
+    image_url: media('participant_5.jpg'), video_url: media('video_2.mp4') },
+  { id: 6, full_name: 'Тихонова Валерия Денисовна', birth_date: '2006-02-17', position: 'Доигровщица', height_cm: 178, sport_rank: '2 разряд', city: 'Дудинка',
+    description: 'Молодая доигровщица, первый сезон в студенческом волейболе. Надёжный приём, техничный удар с обводкой блока, работает над подачей в прыжке.',
+    image_url: media('participant_6.jpg'), video_url: media('video_3.mp4') },
+  { id: 7, full_name: 'Орлова Ксения Максимовна', birth_date: '2003-09-05', position: 'Центральная блокирующая', height_cm: 186, sport_rank: '1 разряд', city: 'Норильск',
+    description: 'Центральная блокирующая, сильна в одиночном блоке и в атаке с короткой передачи. Хорошо перемещается вдоль сетки и закрывает направление удара соперника.',
+    image_url: media('participant_7.jpg'), video_url: media('video_1.mp4') },
+  { id: 8, full_name: 'Иванова Софья Павловна', birth_date: '2005-06-21', position: 'Связующая', height_cm: 172, sport_rank: '2 разряд', city: 'Талнах',
+    description: 'Связующая, делает ставку на быструю игру и передачи во вторую линию. Хорошая подача и игра в защите. Запасная связующая сборной ЗГУ.',
+    image_url: media('participant_8.jpg'), video_url: media('video_2.mp4') },
+  { id: 9, full_name: 'Шарипова Амина Руслановна', birth_date: '2004-08-12', position: 'Либеро', height_cm: 163, sport_rank: '1 разряд', city: 'Кайеркан',
+    description: 'Либеро с отличным приёмом силовой подачи. Уверенно играет в защите на задней линии, организует подстраховку и командует расстановкой при приёме.',
+    image_url: media('participant_9.jpg'), video_url: media('video_3.mp4') },
+  { id: 10, full_name: 'Федорова Мария Алексеевна', birth_date: '2001-12-03', position: 'Диагональная', height_cm: 183, sport_rank: 'КМС', city: 'Норильск',
+    description: 'Опытная диагональная нападающая. Атакует из второй зоны и пайпом с задней линии, сильная подача в прыжке. Играет за команду ветеранов ЗГУ.',
+    image_url: media('participant_10.jpg'), video_url: media('video_1.mp4') },
+  { id: 11, full_name: 'Зайцева Ульяна Романовна', birth_date: '2005-04-18', position: 'Доигровщица', height_cm: 179, sport_rank: '1 разряд', city: 'Талнах',
+    description: 'Доигровщица из команды Талнаха. Сильная подача в прыжке и атака из шестой зоны, уверенный приём.',
+    image_url: null, video_url: null },
+]
