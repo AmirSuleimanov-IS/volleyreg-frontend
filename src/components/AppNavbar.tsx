@@ -3,6 +3,9 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { logoutThunk } from '../store/authSlice'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 
+// в нативном приложении Tauri только интерфейс гостя (без входа и редактирования)
+const GUEST_ONLY = import.meta.env.VITE_GUEST_ONLY === 'true'
+
 // Навигационная панель: меню гостя или пользователя, переключение по кнопке Вход / Выход
 export default function AppNavbar() {
   const user = useAppSelector((s) => s.auth.user)
@@ -36,7 +39,7 @@ export default function AppNavbar() {
             )}
           </Nav>
           <Nav className="align-items-md-center gap-2">
-            {user ? (
+            {GUEST_ONLY ? null : user ? (
               <>
                 <Nav.Link as={NavLink} to="/profile" className="navbar-user">
                   {user.is_organizer ? '🛡 ' : '👤 '}

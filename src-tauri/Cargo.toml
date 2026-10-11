@@ -1,0 +1,16 @@
+[package]
+name = "volleyreg"
+version = "1.0.0"
+description = "VolleyReg — нативное приложение гостя: участницы Первенства ЗГУ по волейболу 2026"
+authors = ["Сулейманов А.Ш."]
+edition = "2021"
+rust-version = "1.77.2"
+
+[build-dependencies]
+tauri-build = { version = "2.2.0", features = [] }
+
+[dependencies]
+tauri = { version = "2.5.0", features = [] }
+
+[profile.release]
+strip = true

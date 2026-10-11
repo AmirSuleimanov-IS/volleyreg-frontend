@@ -4,3 +4,4 @@ dist
 .env
 src-tauri/target
 *.tsbuildinfo
+dist-pages

@@ -424,3 +424,59 @@ a {
 .apps-table tbody tr {
   cursor: pointer;
 }
+
+/* лабораторная 8: адаптивность. Сетка карточек — Row xs={1} sm={2} lg={3}:
+   до 576 px — 1 колонка, 576–991 px — 2 колонки, от 992 px — 3 колонки; фото карточки 4:3 */
+@media (max-width: 767px) {
+  .page {
+    padding-top: 12px;
+  }
+
+  .page-title {
+    font-size: 22px;
+  }
+
+  .hero {
+    padding: 20px;
+  }
+
+  .hero__title {
+    font-size: 28px;
+  }
+
+  .hero__text {
+    font-size: 16px;
+  }
+
+  .vibe {
+    max-width: 100%;
+  }
+
+  .participant-card__title {
+    font-size: 16px;
+  }
+
+  .draft-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .roster-row__name {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .roster-row__number {
+    width: 100%;
+  }
+
+  .app-result__value {
+    font-size: 32px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .participant-card__image {
+    aspect-ratio: 16 / 10;
+  }
+}

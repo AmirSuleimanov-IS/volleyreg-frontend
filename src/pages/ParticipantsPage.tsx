@@ -8,16 +8,18 @@ import ParticipantCard from '../components/ParticipantCard'
 import ParticipantsFilterForm from '../components/ParticipantsFilterForm'
 import { addToDraftThunk, fetchDraftThunk } from '../store/draftSlice'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
-import type { Participant, ParticipantsFilter } from '../types'
+import { setParticipantsFilter } from '../store/participantsSlice'
+import type { Participant } from '../types'
 
 // Страница списка участников с фильтрами; после входа — кнопки «Добавить» и иконка заявки
 export default function ParticipantsPage() {
-  const [filter, setFilter] = useState<ParticipantsFilter>({ participantName: '', position: '' })
   const [participants, setParticipants] = useState<Participant[]>([])
   const [loading, setLoading] = useState(true)
   const [isMock, setIsMock] = useState(false)
 
   const dispatch = useAppDispatch()
+  // фильтр — в Redux (лабораторная 8): переживает переход на другие страницы
+  const filter = useAppSelector((s) => s.participants.filter)
   const user = useAppSelector((s) => s.auth.user)
   const { addingId, error } = useAppSelector((s) => s.draft)
 
@@ -45,7 +47,7 @@ export default function ParticipantsPage() {
       </div>
       <MockBanner show={isMock} />
       {error && <Alert variant="danger">{error}</Alert>}
-      <ParticipantsFilterForm value={filter} onSearch={setFilter} />
+      <ParticipantsFilterForm value={filter} onSearch={(f) => dispatch(setParticipantsFilter(f))} />
 
       {loading ? (
         <div className="text-center py-5">
