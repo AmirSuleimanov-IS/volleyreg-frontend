@@ -281,3 +281,146 @@ a {
 .similar__status {
   color: var(--text-grey);
 }
+
+/* лабораторная 7: вход, корзина, заявки */
+.navbar-user {
+  font-weight: 600;
+  color: #fff !important;
+}
+
+.auth-card {
+  max-width: 460px;
+  margin: 16px auto;
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.auth-card__hint {
+  margin: 16px 0 0;
+  color: var(--text-grey);
+}
+
+.draft-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: var(--dark);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.draft-button:hover {
+  color: var(--primary);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+}
+
+.draft-button--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.status-badge {
+  font-size: 15px;
+}
+
+.app-card,
+.app-result,
+.roster-row {
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.app-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.app-result {
+  background: var(--primary);
+  color: #fff;
+}
+
+.app-result__label {
+  opacity: 0.85;
+}
+
+.app-result__value {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.app-result__dates {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 12px;
+  margin: 12px 0 0;
+  font-size: 14px;
+}
+
+.app-result__dates dt {
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+.app-result__dates dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #001226;
+  margin: 28px 0 14px;
+}
+
+.roster {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.roster-row__image {
+  width: 110px;
+  height: 74px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.roster-row__info {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 24px;
+  align-items: center;
+}
+
+.roster-row__name {
+  font-weight: 600;
+  min-width: 240px;
+}
+
+.roster-row__number {
+  width: 120px;
+  font-size: 13px;
+  color: var(--text-grey);
+}
+
+.apps-table {
+  background: #fff;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.apps-table tbody tr {
+  cursor: pointer;
+}

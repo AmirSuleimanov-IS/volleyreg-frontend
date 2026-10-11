@@ -1,18 +1,25 @@
 import { useEffect, useState } from 'react'
-import { Col, Row, Spinner } from 'react-bootstrap'
+import { Alert, Col, Row, Spinner } from 'react-bootstrap'
 import { getParticipants } from '../api/participants'
 import Breadcrumbs from '../components/Breadcrumbs'
+import DraftButton from '../components/DraftButton'
 import MockBanner from '../components/MockBanner'
 import ParticipantCard from '../components/ParticipantCard'
 import ParticipantsFilterForm from '../components/ParticipantsFilterForm'
+import { addToDraftThunk, fetchDraftThunk } from '../store/draftSlice'
+import { useAppDispatch, useAppSelector } from '../store/hooks'
 import type { Participant, ParticipantsFilter } from '../types'
 
-// Страница списка участников с фильтрами
+// Страница списка участников с фильтрами; после входа — кнопки «Добавить» и иконка заявки
 export default function ParticipantsPage() {
   const [filter, setFilter] = useState<ParticipantsFilter>({ participantName: '', position: '' })
   const [participants, setParticipants] = useState<Participant[]>([])
   const [loading, setLoading] = useState(true)
   const [isMock, setIsMock] = useState(false)
+
+  const dispatch = useAppDispatch()
+  const user = useAppSelector((s) => s.auth.user)
+  const { addingId, error } = useAppSelector((s) => s.draft)
 
   useEffect(() => {
     setLoading(true)
@@ -24,11 +31,20 @@ export default function ParticipantsPage() {
       .finally(() => setLoading(false))
   }, [filter])
 
+  // иконка заявки: id черновика и количество участниц
+  useEffect(() => {
+    if (user) dispatch(fetchDraftThunk())
+  }, [user, dispatch])
+
   return (
     <>
       <Breadcrumbs items={[{ label: 'Участники' }]} />
-      <h1 className="page-title">Участницы Первенства ЗГУ по волейболу 2026</h1>
+      <div className="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+        <h1 className="page-title">Участницы Первенства ЗГУ по волейболу 2026</h1>
+        {user && <DraftButton />}
+      </div>
       <MockBanner show={isMock} />
+      {error && <Alert variant="danger">{error}</Alert>}
       <ParticipantsFilterForm value={filter} onSearch={setFilter} />
 
       {loading ? (
@@ -41,7 +57,11 @@ export default function ParticipantsPage() {
         <Row xs={1} sm={2} lg={3} className="g-4">
           {participants.map((p) => (
             <Col key={p.id}>
-              <ParticipantCard participant={p} />
+              <ParticipantCard
+                participant={p}
+                onAdd={user && !isMock ? (id) => dispatch(addToDraftThunk(id)) : undefined}
+                adding={addingId === p.id}
+              />
             </Col>
           ))}
         </Row>

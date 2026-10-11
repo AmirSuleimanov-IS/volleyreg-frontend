@@ -1,8 +1,19 @@
-import { Container, Nav, Navbar } from 'react-bootstrap'
-import { NavLink } from 'react-router-dom'
+import { Button, Container, Nav, Navbar } from 'react-bootstrap'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { logoutThunk } from '../store/authSlice'
+import { useAppDispatch, useAppSelector } from '../store/hooks'
 
-// Навигационная панель со списком базовых страниц
+// Навигационная панель: меню гостя или пользователя, переключение по кнопке Вход / Выход
 export default function AppNavbar() {
+  const user = useAppSelector((s) => s.auth.user)
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+
+  const logout = async () => {
+    await dispatch(logoutThunk())
+    navigate('/participants')
+  }
+
   return (
     <Navbar expand="md" variant="dark" className="app-navbar">
       <Container>
@@ -18,6 +29,33 @@ export default function AppNavbar() {
             <Nav.Link as={NavLink} to="/participants">
               Участники
             </Nav.Link>
+            {user && (
+              <Nav.Link as={NavLink} to="/team-applications">
+                {user.is_organizer ? 'Заявки команд' : 'Мои заявки'}
+              </Nav.Link>
+            )}
+          </Nav>
+          <Nav className="align-items-md-center gap-2">
+            {user ? (
+              <>
+                <Nav.Link as={NavLink} to="/profile" className="navbar-user">
+                  {user.is_organizer ? '🛡 ' : '👤 '}
+                  {user.full_name || user.login}
+                </Nav.Link>
+                <Button variant="outline-light" size="sm" onClick={logout}>
+                  Выход
+                </Button>
+              </>
+            ) : (
+              <>
+                <Nav.Link as={NavLink} to="/register">
+                  Регистрация
+                </Nav.Link>
+                <Button variant="light" size="sm" onClick={() => navigate('/login')}>
+                  Вход
+                </Button>
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
