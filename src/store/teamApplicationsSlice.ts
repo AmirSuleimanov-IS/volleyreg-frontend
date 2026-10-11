@@ -19,9 +19,14 @@ interface TeamApplicationsState {
   error: string | null
 }
 
-const today = new Date().toISOString().slice(0, 10)
-const initialFilters: TeamApplicationsFilters = { status: '', formedFrom: today, formedTo: today, creator: '' }
-const initialState: TeamApplicationsState = { items: [], filters: initialFilters, loading: false, error: null }
+// сегодняшняя дата по местному времени в формате YYYY-MM-DD
+const today = () => new Date().toLocaleDateString('sv-SE')
+const initialState = (): TeamApplicationsState => ({
+  items: [],
+  filters: { status: '', formedFrom: today(), formedTo: today(), creator: '' },
+  loading: false,
+  error: null,
+})
 
 // silent — фоновое обновление (short polling) без анимации загрузки
 export const fetchTeamApplicationsThunk = createAsyncThunk(
@@ -79,8 +84,9 @@ const teamApplicationsSlice = createSlice({
       .addCase(moderateTeamApplicationThunk.rejected, (state, action) => {
         state.error = action.payload as string
       })
-      // при выходе фильтры пользователя сбрасываются
-      .addCase(logoutThunk.fulfilled, () => initialState)
+      // при выходе фильтры пользователя сбрасываются (даже если запрос выхода завершился ошибкой)
+      .addCase(logoutThunk.fulfilled, () => initialState())
+      .addCase(logoutThunk.rejected, () => initialState())
   },
 })
 

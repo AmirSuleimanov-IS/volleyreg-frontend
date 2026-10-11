@@ -96,7 +96,7 @@ export default function TeamApplicationsPage() {
           <tbody>
             {visible.length === 0 && (
               <tr>
-                <td colSpan={9} className="text-center text-muted">
+                <td colSpan={user.is_organizer ? 9 : 7} className="text-center text-muted">
                   Заявок нет
                 </td>
               </tr>

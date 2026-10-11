@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Alert, Col, Row, Spinner } from 'react-bootstrap'
-import { getParticipants } from '../api/participants'
 import Breadcrumbs from '../components/Breadcrumbs'
 import DraftButton from '../components/DraftButton'
 import MockBanner from '../components/MockBanner'
@@ -8,30 +7,20 @@ import ParticipantCard from '../components/ParticipantCard'
 import ParticipantsFilterForm from '../components/ParticipantsFilterForm'
 import { addToDraftThunk, fetchDraftThunk } from '../store/draftSlice'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
-import { setParticipantsFilter } from '../store/participantsSlice'
-import type { Participant } from '../types'
+import { fetchParticipantsThunk, setParticipantsFilter } from '../store/participantsSlice'
 
 // Страница списка участников с фильтрами; после входа — кнопки «Добавить» и иконка заявки
 export default function ParticipantsPage() {
-  const [participants, setParticipants] = useState<Participant[]>([])
-  const [loading, setLoading] = useState(true)
-  const [isMock, setIsMock] = useState(false)
-
   const dispatch = useAppDispatch()
-  // фильтр — в Redux (лабораторная 8): переживает переход на другие страницы
-  const filter = useAppSelector((s) => s.participants.filter)
+  // фильтр и список — в Redux: фильтр переживает переход на другие страницы
+  const { filter, items: participants, loading, isMock } = useAppSelector((s) => s.participants)
   const user = useAppSelector((s) => s.auth.user)
   const { addingId, error } = useAppSelector((s) => s.draft)
 
+  // загрузка списка через thunk при открытии страницы и при изменении фильтра
   useEffect(() => {
-    setLoading(true)
-    getParticipants(filter)
-      .then(({ data, isMock }) => {
-        setParticipants(data)
-        setIsMock(isMock)
-      })
-      .finally(() => setLoading(false))
-  }, [filter])
+    dispatch(fetchParticipantsThunk())
+  }, [filter, dispatch])
 
   // иконка заявки: id черновика и количество участниц
   useEffect(() => {

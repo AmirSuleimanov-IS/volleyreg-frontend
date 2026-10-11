@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import { POSITIONS, type ParticipantsFilter } from '../types'
 
@@ -11,6 +11,12 @@ interface Props {
 export default function ParticipantsFilterForm({ value, onSearch }: Props) {
   const [participantName, setParticipantName] = useState(value.participantName)
   const [position, setPosition] = useState(value.position)
+
+  // если фильтр изменился снаружи (сброс при выходе), показать новое значение
+  useEffect(() => {
+    setParticipantName(value.participantName)
+    setPosition(value.position)
+  }, [value])
 
   const submit = (e: FormEvent) => {
     e.preventDefault()

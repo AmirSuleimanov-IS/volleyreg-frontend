@@ -86,11 +86,7 @@ const savingThunks = [updateTeamApplicationThunk, updateJerseyNumberThunk, remov
 const teamApplicationSlice = createSlice({
   name: 'teamApplication',
   initialState,
-  reducers: {
-    clearTeamApplicationError: (state) => {
-      state.error = null
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchTeamApplicationThunk.pending, (state) => {
@@ -111,6 +107,7 @@ const teamApplicationSlice = createSlice({
         state.error = action.payload as string
       })
       .addCase(logoutThunk.fulfilled, () => initialState)
+      .addCase(logoutThunk.rejected, () => initialState)
     for (const thunk of savingThunks) {
       builder
         .addCase(thunk.pending, (state) => {
@@ -129,5 +126,4 @@ const teamApplicationSlice = createSlice({
   },
 })
 
-export const { clearTeamApplicationError } = teamApplicationSlice.actions
 export default teamApplicationSlice.reducer

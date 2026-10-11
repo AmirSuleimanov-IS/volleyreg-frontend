@@ -1,8 +1,8 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { Alert, Button, Card, Form, Spinner } from 'react-bootstrap'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Breadcrumbs from '../components/Breadcrumbs'
-import { loginThunk } from '../store/authSlice'
+import { clearAuthError, loginThunk } from '../store/authSlice'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 
 // Страница входа: после успешного входа интерфейс гостя переключается на интерфейс пользователя
@@ -14,6 +14,10 @@ export default function LoginPage() {
   const navigate = useNavigate()
   const location = useLocation()
   const registered = (location.state as { registered?: string } | null)?.registered
+
+  useEffect(() => {
+    dispatch(clearAuthError())
+  }, [dispatch])
 
   const submit = async (e: FormEvent) => {
     e.preventDefault()

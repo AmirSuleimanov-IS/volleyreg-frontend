@@ -1,8 +1,8 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { Alert, Button, Card, Form, Spinner } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import Breadcrumbs from '../components/Breadcrumbs'
-import { registerThunk } from '../store/authSlice'
+import { clearAuthError, registerThunk } from '../store/authSlice'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 
 // Регистрация представителя команды
@@ -13,6 +13,10 @@ export default function RegisterPage() {
   const { loading, error } = useAppSelector((s) => s.auth)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    dispatch(clearAuthError())
+  }, [dispatch])
 
   const submit = async (e: FormEvent) => {
     e.preventDefault()

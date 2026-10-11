@@ -1,31 +1,23 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Badge, Spinner } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
-import { getParticipant } from '../api/participants'
 import Breadcrumbs from '../components/Breadcrumbs'
 import MockBanner from '../components/MockBanner'
 import ParticipantImage from '../components/ParticipantImage'
 import SimilarParticipants from '../components/SimilarParticipants'
-import type { Participant } from '../types'
-
-const formatDate = (iso: string) => iso.split('-').reverse().join('.')
+import { useAppDispatch, useAppSelector } from '../store/hooks'
+import { fetchParticipantThunk } from '../store/participantsSlice'
+import { formatDate } from '../utils/status'
 
 // Страница одного участника в портретном режиме
 export default function ParticipantPage() {
   const { id } = useParams()
-  const [participant, setParticipant] = useState<Participant | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [isMock, setIsMock] = useState(false)
+  const dispatch = useAppDispatch()
+  const { current: participant, loading, isMock } = useAppSelector((s) => s.participants)
 
   useEffect(() => {
-    setLoading(true)
-    getParticipant(Number(id))
-      .then(({ data, isMock }) => {
-        setParticipant(data ?? null)
-        setIsMock(isMock)
-      })
-      .finally(() => setLoading(false))
-  }, [id])
+    dispatch(fetchParticipantThunk(Number(id)))
+  }, [id, dispatch])
 
   if (loading) {
     return (
