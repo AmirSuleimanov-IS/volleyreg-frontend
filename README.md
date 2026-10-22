@@ -14,6 +14,6 @@ npm run tauri build -- --no-bundle   # нативное приложение д�
 npm test               # vitest
 ```
 
-- GitHub Pages: публикуется workflow `.github/workflows/deploy-pages.yml` при push в `main` — https://<логин>.github.io/volleyreg-frontend/
-- Бэкенд: репозиторий `volleyreg-backend`.
+- GitHub Pages: https://amirsuleimanov-is.github.io/volleyreg-frontend/ — публикуется workflow `.github/workflows/deploy-pages.yml` при push в `main`. Без запущенного бэкенда показываются mock-данные, с бэкендом на `localhost:8080` — данные из API (в бэкенде включён CORS).
+- Бэкенд: https://github.com/AmirSuleimanov-IS/volleyreg-backend
 - Для Tauri укажите IP компьютера с бэкендом в `.env.tauri`.
